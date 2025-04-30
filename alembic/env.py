@@ -24,6 +24,10 @@ target_metadata = evenement.metadata  # C'est ton Base.metadata
 if config.get_main_option("sqlalchemy.url") == "":
     config.set_main_option("sqlalchemy.url", DATABASE_URL)
 
+# ✅ Ajout ici pour filtrer uniquement le schéma `evenement`
+def include_object(obj, name, type_, reflected, compare_to):
+    return getattr(obj, "schema", POSTGRES_SCHEMA) == POSTGRES_SCHEMA
+
 
 def run_migrations_offline() -> None:
     """Run migrations en mode offline."""
@@ -35,6 +39,7 @@ def run_migrations_offline() -> None:
         dialect_opts={"paramstyle": "named"},
         version_table_schema=POSTGRES_SCHEMA,
         include_schemas=True,
+        include_object=include_object,
         compare_type=True,
     )
 
@@ -48,6 +53,7 @@ def do_run_migrations(connection):
         target_metadata=target_metadata,
         version_table_schema=POSTGRES_SCHEMA,
         include_schemas=True,
+        include_object=include_object,
         compare_type=True,
     )
 
