@@ -1,47 +1,34 @@
 from pydantic import BaseModel
 from typing import Optional
-from datetime import date, datetime
+from datetime import date
 from enum import Enum
 
 
-class EventStatutEnum(str, Enum):
-    EN_ATTENTE = "en_attente"
-    VALIDE = "valide"
-    REFUSE = "refuse"
+class StatutEvenementEnum(str, Enum):
     EN_PREPARATION = "en_preparation"
     PRET = "pret"
     ANNULE = "annule"
 
 
 class EvenementBase(BaseModel):
-    nom: str
-    description: Optional[str] = None
+    titre: str
     date_evenement: date
     lieu: str
-    budget_estime: Optional[int] = None
-    besoins_logistiques: Optional[str] = None
+    nb_participants: Optional[int] = None
 
 
 class EvenementCreate(EvenementBase):
-    est_etudiant: bool = False
+    demande_id: int
 
 
 class EvenementRead(EvenementBase):
     id: int
-    statut: EventStatutEnum
-    commentaire_refus: Optional[str] = None
-    cree_par: int
-    created_at: datetime
+    status: StatutEvenementEnum
 
     model_config = {
-        "from_attributes": True  # remplace orm_mode pour Pydantic v2
+        "from_attributes": True
     }
 
 
 class EvenementUpdateStatut(BaseModel):
-    statut: EventStatutEnum
-
-
-class EvenementTraiter(BaseModel):
-    statut: EventStatutEnum
-    commentaire_refus: Optional[str] = None
+    status: StatutEvenementEnum
