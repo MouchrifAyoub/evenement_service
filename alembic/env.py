@@ -6,9 +6,9 @@ from sqlalchemy.ext.asyncio import async_engine_from_config, AsyncEngine
 
 from alembic import context
 from app.config.settings import DATABASE_URL, POSTGRES_SCHEMA
-
+from app.models.base import Base
 # Importer ici tes modèles SQLAlchemy
-from app.models import evenement  # ce fichier evenement.py contiendra ton modele Evenement
+from app.models import demande_evenement, evenement, budget, logistique
 
 # Alembic Config object
 config = context.config
@@ -18,7 +18,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 # Target metadata pour 'autogenerate' Alembic
-target_metadata = evenement.metadata  # C'est ton Base.metadata
+target_metadata = Base.metadata
 
 # Injecter dynamiquement DATABASE_URL depuis settings
 if config.get_main_option("sqlalchemy.url") == "":
