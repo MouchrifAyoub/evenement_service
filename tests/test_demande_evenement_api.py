@@ -27,3 +27,19 @@ async def test_refuser_demande_date_invalid(async_client):
     response = await async_client.post("/api/demandes-evenements", json=payload)
     assert response.status_code == 400
     assert "6 semaines" in response.json()["detail"]
+
+# Test pour consulter ses demandes (GET /api/mes-demandes-evenements)
+# @pytest.mark.asyncio
+# async def test_get_mes_demandes_evenements(async_client):
+#     response = await async_client.get("/api/mes-demandes-evenements")
+#     assert response.status_code == 200
+#     data = response.json()
+#     assert isinstance(data, list)
+
+# Test pour consulter les événements validés (GET /api/evenements-valides)
+# @pytest.mark.asyncio
+# async def test_get_evenements_valides(async_client):
+#     response = await async_client.get("/api/evenements-valides")
+#     assert response.status_code == 200
+#     data = response.json()
+#     assert isinstance(data, list)
