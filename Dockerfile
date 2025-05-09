@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . .
 
 # Installer Poetry et les dépendances
-RUN pip install --no-cache-dir poetry && poetry install
+RUN pip install --no-cache-dir poetry && poetry install --with dev
 
 # Lancer Uvicorn
 CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -53,6 +53,3 @@ coverage.xml
 
 # VSCode
 .vscode/
-
-# Alembic
-alembic/versions/*
